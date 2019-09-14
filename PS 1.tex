@@ -1,0 +1,186 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{ulem}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{bbm}
+
+\title{
+Math GU4041, Fall 2019 \\
+Modern Algebra I, Prof. Kyler Siegel \\
+Problem Set 1
+}
+\author{Khyber Sen}
+\date{9/13/2019}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+    
+    \maketitle
+    
+    \section{Problem 1}
+    Let $A$ and $B$ be sets.  Prove the following:
+        \begin{enumerate}
+            \item a map $f: A \to B$ is injective $\iff$ it has a left inverse
+            \item a map $f: A \to B$ is surjective $\iff$ it has a right inverse
+            \item $|A| = |B| < \infty \implies$ (a map $f: A \to B$ is bijective $\iff$ it is injective)
+        \end{enumerate}
+        
+        \subsection{Solution}
+        \begin{enumerate}
+            
+            \item 
+            For the $\implies$ direction, let $g: B \to A = y \mapsto
+                \begin{cases}
+                    x & \impliedby \exists \text{ } x \in A \text{ s.t. } y = f(x) \\
+                    c & \impliedby y \notin f(A)
+                \end{cases}
+            $, where $c \in A$ is any element of $A$.  Since $f$ is injective, the top case in this definition is well-defined since the $x$ is unique.  Then it's trivial that $g(f(x)) = x$ $\forall$ $x \in A$, so we know that $g \circ f = \mathbbm{1}_A$ and thus $g$ is a left inverse of $f$.
+            
+            For the $\impliedby$ direction, $f$ is injective if $f(a) = f(b) \implies a = b$ by definition.  So if $f(a) = f(b)$, then $f^{-1}(f(a)) = f^{-1}(f(b))$.  Since $f^{-1}$ is the left inverse, $f^{-1} \circ f = \mathbbm{1}_A$, so $a = b$, and thus $f$ is injective.
+            
+            \item
+            For the $\implies$ direction, let $g: B \to A = y \mapsto x$ s.t.\ $y = f(x)$.  Since $f$ is surjective, $\exists$ at least one such $x$ $\forall$ $y \in B$.  Such an $x$ may not be unique, but any such $x$ may be chosen arbitrarily.  Using this $g$, it's trivial that $f(g(y)) = y$ $\forall$ $y \in B$.  Therefore, $f \circ g = \mathbbm{1}_B$, so $g$ is a right inverse of $f$.
+            
+            For the $\impliedby$ direction, $f$ is surjective if $f(A) = B$, i.e.\ $\{f(a) \mid a \in A\} = B$, by definition.  In other words, we need to show $\forall$ $b \in B$, $\exists$ $a \in A$ s.t.\ $f(a) = b$.  $\forall$ $b \in B$, let $a = f^{-1}(b)$.  Then $f(a) = f(f^{-1}(b)) = b$, so $f$ is surjective.
+            
+            \item The $\implies$ direction is trivial here, since bijectivity implies injectivity by definition.  To prove the $\impliedby$ direction, first assume that $f$ is not bijective.  Since it's injective, it must not be surjective.  Therefore, there must be elements in $B$ that aren't mapped to by $f$.  But since $|A| = |B|$, the only way this is possible is if multiple elements in $A$ map to a single element in $B$.  But this would mean $f$ is not injective, which is a contradiction, so therefore $f$ must be bijective. 
+            
+        \end{enumerate}
+    
+    \pagebreak
+        
+    \section{Problem 2}
+    Give an example of 
+    \begin{enumerate}
+        \item a map $f: \mathbb{Z} \to \mathbb{Z}$ which is injective but not surjective
+        \item a map $f: \mathbb{Z} \to \mathbb{Z}$ which is surjective but not injective
+        \item a bijection $f: \mathbb{Z} \to \mathbb{Z}$ which is not the identity map
+    \end{enumerate}
+        
+        \subsection{Solution}
+        \begin{enumerate}
+            
+            \item Let $f(x) = 2x$.  This is injective because $\forall$ $x, y \in \mathbb{Z}$ s.t.\ $x \neq y$, $f(x) = 2x = 2y = f(y)$ is not true unless $x = y$, which isn't the case.  But $f(\mathbb{Z})$ is only the even integers, so $f$ is not surjective.
+            
+            \item Let $f(x) = \lfloor \frac{1}{2} x \rfloor$.  $f(\{$even numbers$\} \subset \mathbb{Z}) = \mathbb{Z}$, so clearly $f(\mathbb{Z}) = \mathbb{Z}$, meaning $f$ is surjective.  But $0 \neq 1$ and yet $f(0) = f(1) = 0$, so $f$ is not injective.
+            
+            \item Let $f(x) = -x$.  Since negation has an inverse, itself, it is a bijection.
+            
+        \end{enumerate}
+    
+    \section{Problem 3}
+    Let $A$ be a set and let $\{A_i \mid i \in I\}$ be a partition of $A$ (here $I$ is some indexing set).  Prove that there is an equivalence relation $\sim$ on $A$ whose equivalence classes are precisely the sets $A_i$ $\forall$ $i \in I$.  \textit{Note}: for this exercise you should be explicit about checking the three conditions for $\sim$ to be an equivalence relation.
+        
+        \subsection{Solution}
+        Let $R \subseteq A \times A = \bigcup\limits_{i \in I} A_i \times A_i$, and let $\sim$ be the associated equivalence operator for the relation $R$, i.e.\ $a \sim b := (a, b) \in R$.  Now we prove the three equivalence relation axioms:
+        \begin{itemize}
+            
+            \item \textbf{reflexivity}: $a \sim a$. \\
+            $\exists$ $i \in I$ s.t.\ $a \in A_i$, so $A_i \times A_i \subseteq R$.  Therefore, $(a, a) \in R$, so $a \sim a$.
+            
+            \item \textbf{symmetry}: $a \sim b \iff b \sim a$. \\
+            Proving the $\implies$ direction is identical to proving the $\impliedby$ direction, so it will suffice to only prove the $\implies$ direction.  If $a \sim b$, then $(a, b) \in R$.  $\exists$ $i \in I$ s.t.\ $(a, b) \in A_i \times A_i$.  Switching $S \times T$ to $T \times S$ reverses all the pairs, but since in this case the $S = T = A_i$, they are the same, meaning $(a, b) \in A_i \times A_i \implies (b, a) \in A_i \times A_i$, so therefore $(b, a) \in R$ and thus $b \sim a$.
+            
+            \item \textbf{transitivity}: $a \sim b$, $b \sim c \implies a \sim c$. \\
+            Since $a \sim b$ and $b \sim c$, $(a, b) \in R$ and $(b, c) \in R$.  $\exists$ $i \in I$ s.t.\ $(a, b) \in A_i \times A_i$, meaning $a \in A_i$ and $b \in A_i$.  Since the $A_i$ are a partition of $A$, $a$ and $b$ are only in this $A_i$.  The same logic can be applied to $(b, c)$, so we also know $b \in A_i$ and $c \in A_i$.  Therefore, we know that $a \in A_i$ and $c \in A_i$, so $(a, c) \in A_i \times A_i$, and thus $a \sim c$.
+        \end{itemize}
+    
+    \pagebreak
+    
+    \section{Problem 4}
+    How many partitions are there of the set $\{1, 2, 3, 4, 5, 6\}$?
+        
+        \subsection{Solution}
+        There are clearly a lot of partitions of the set $\{1, 2, 3, 4, 5, 6\}$, so instead of counting them in some complicated manner, I decided to look for a generic formula for computing the number of partitions of a set of size $n$: $\{1..n\}$.
+        
+        First, let $f(n)$ be the number of partitions of a set of size $n$.  Now we will derive a recursive formula for $f(n + 1)$.  To create a partition, first we select the first set in the partition.  Since empty sets can't be part of a partition, we need to choose a first element, and then add to it $k$ more elements ($k \in 1..n$).  Thus, there are $\binom{n}{k}$ ways of choosing this first set.  Then we need to partition the rest of the $n - k$ elements in $\{1..n + 1\}$ and add the first set to this partition.  There are $f(n - k)$ ways of partitioning the remainder elements and $\binom{n}{k}$ ways of choosing the first set, so to calculate $f(n)$, we just sum the product of these over all $k$: $f(n + 1) = \sum\limits_{k = 0}^{n} \binom{n}{k} f(n - k)$.  Furthermore, since $\binom{n}{k}$ is ``symmetric'', we can reverse the sum to simplify it: $f(n + 1) = \sum\limits_{k = 0}^{n} \binom{n}{n - k} f(k) = \sum\limits_{k = 0}^{n} \binom{n}{k} f(k)$.
+        
+        Having derived $f(n + 1) = \sum\limits_{k = 0}^{n} \binom{n}{k} f(k)$, and knowing the base case of $f(0) = 1$ (the empty set is the only partition of the empty set), we can easily compute $f(n)$ using dynamic programming.  In particular, $f(6) = 203$, so there are 203 partitions of the set $\{1, 2, 3, 4, 5, 6\}$.
+        
+    \section{Problem 5}
+    Let $\mathbb{Z}$ denote the set of integers and let $\mathbb{Q}$ denote the set of rational numbers.  Does there exist a bijection $f: \mathbb{Z} \to \mathbb{Q}$?  You should explicitly justify your answer.
+        
+        \subsection{Solution}
+        A rational number is just the ratio of two integers, i.e.\ $\forall$ $r \in \mathbb{Q}$, $\exists$ $p, q \in \mathbb{Z}$ s.t.\ $r = \frac{p}{q}$.  This means that $\mathbb{Q}$ and $\mathbb{Z}^2$ are basically the same, i.e.\ they are isomorphic, because every rational number is just a pair of integers.  Therefore, finding a bijection $f: \mathbb{Z} \to \mathbb{Q}$ is the same as finding a bijection $f: \mathbb{Z} \to \mathbb{Z}^2$.  To construct $f$, we will compose two bijections $g: \mathbb{Z} \to \mathbb{N}$ and $h: \mathbb{N} \to \mathbb{Z}^2 = \mathbb{Q}$.  The composition of bijections is a bijection, so $f$ will be a bijection.
+        
+        Both $g$ and $h$ are bijections from/to (it doesn't matter, they're bijections, so we can just consider their inverses instead) $\mathbb{N}$, so we are just finding a way to count $\mathbb{Z}$ and $\mathbb{Z}^2$.  For $g$, to count $\mathbb{Z}$, we just count 0, 1, -1, 2, -2, ..., alternating incrementation and negation.  For $h$, to count $\mathbb{Z}^2$, we can imagine $\mathbb{Z}^2$ as a lattice, and count the lattice points spiraling out from the origin: (0, 0), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1), (-1, 2), ...
+        
+    \pagebreak
+    
+    \section{Problem 6}
+    Write out the complete multiplication table for $S_3$, the symmetric group on three elements.  \textit{Note}: it should be a $6 \times 6$ table.  You may name the elements of $S_3$ however you'd like, as long as your naming scheme is clearly explained.
+        
+        \subsection{Solution}
+        First, name the 6 elements of $S_3$: \\ \\
+        \noindent
+        \indent $a$ = 1, 2, 3 \\
+        \indent $b$ = 1, 3, 2 \\
+        \indent $c$ = 2, 1, 3 \\
+        \indent $d$ = 2, 3, 1 \\
+        \indent $e$ = 3, 1, 2 \\
+        \indent $f$ = 3, 2, 1 \\
+        
+        \noindent
+        Then this is the multiplication table, where the left element multiplies the top element in that order: \\
+        
+        \begin{tabular}{ c|c|c|c|c|c|c| } 
+            $\circ$ & $a$ & $b$ & $c$ & $d$ & $e$ & $f$ \\ \hline 
+            $a$ & $a$ & $b$ & $c$ & $d$ & $e$ & $f$ \\ \hline 
+            $b$ & $b$ & $a$ & $e$ & $f$ & $c$ & $d$ \\ \hline 
+            $c$ & $c$ & $d$ & $a$ & $b$ & $f$ & $e$ \\ \hline 
+            $d$ & $d$ & $c$ & $f$ & $e$ & $a$ & $b$ \\ \hline 
+            $e$ & $e$ & $f$ & $b$ & $a$ & $d$ & $c$ \\ \hline 
+            $f$ & $f$ & $e$ & $d$ & $c$ & $b$ & $a$ \\ \hline
+        \end{tabular}
+        
+    \section{Problem 7}
+    Write out the multiplication table for a group of order 3.  Explicitly verify that the three axioms of a group are satisfied.
+        
+        \subsection{Solution}
+        Using the group $\mathbb{Z}/3\mathbb{Z}$, this is the multiplication table: \\
+        
+        \begin{tabular}{ c|c|c|c| } 
+            $+$ & {[0]} & {[1]} & {[2]} \\ \hline 
+            [0] & [0] & [1] & [2] \\ \hline 
+            [1] & [1] & [2] & [0] \\ \hline 
+            [2] & [2] & [0] & [1] \\ \hline
+        \end{tabular}
+        $ $ \\
+        $ $ \\
+        \noindent
+        For this group, define the group operation $[a] * [b] := [a + b]$, the identity $e := [0]$, and the inverse $[a]^{-1} := [-a]$.  From this, the group axioms are satisfied trivially by inheritance from the group axioms for $(\mathbb{Z}, +)$.
+    
+    \pagebreak
+    
+    \section{Problem 8}
+    Prove that every group of order 3 is abelian.
+        
+        \subsection{Solution}
+        All we know about this group $G$ is that $|G| = 3$, but in this case that's enough to prove it's abelian.  Let $G = \{e, a, b\}$, where $e$ is the identity and $a$ and $b$ are the other two elements.  Since $e$ is the identity, we already know $ea = ae = e$ and $eb = be = e$ by the identity axiom.  Now we just have to show that $ab = ba$ for all pairs of $G$ to commute, and thus prove $G$ abelian.  $ab$ must be either $e$, $a$, or $b$.  But if $ab = a$ or $ab = b$, when $b$ or $a$ must be the identity, but $e$ is the identity and the identity is unique.  Therefore, $ab$ must be $e$, and thus $ba = e$ also (by group lemma 3 from class), so $ab = ba$.  Thus, every group of order 3 must be abelian.
+        
+    \section{Problem 9}
+    Write out the multiplication table for a group of order 5, with the elements written as $a$, $b$, $c$, $d$, $e$.  Is your group abelian?  (You do not need to prove that the group axioms are satisfied.)
+        
+        \subsection{Solution}
+        Using the group $\mathbb{Z}/5\mathbb{Z}$, with the elements renamed as such: $a$ = [0], $b$ = [1], $c$ = [2], $d$ = [3], $e$ = [4], here is the multiplication table: \\
+        
+        \begin{tabular}{ c|c|c|c|c|c| } 
+            $+$ & $a$ & $b$ & $c$ & $d$ & $e$ \\ \hline 
+            $a$ & $a$ & $b$ & $c$ & $d$ & $e$ \\ \hline 
+            $b$ & $b$ & $c$ & $d$ & $e$ & $a$ \\ \hline 
+            $c$ & $c$ & $d$ & $e$ & $a$ & $b$ \\ \hline 
+            $d$ & $d$ & $e$ & $a$ & $b$ & $c$ \\ \hline 
+            $e$ & $e$ & $a$ & $b$ & $c$ & $d$ \\ \hline
+        \end{tabular}
+        
+        $ $ \\
+        
+        This group is abelian, which can be seen in the diagonal symmetry of the multiplication table, and in the fact that the modular addition inherits commutativity from integer addition.
+        
+        
+\end{document}
