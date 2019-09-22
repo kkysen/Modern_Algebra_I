@@ -1,0 +1,214 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{ulem}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{fancyvrb}
+
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\generators}{generators}
+
+\title{
+Math GU4041, Fall 2019 \\
+Modern Algebra I, Prof. Kyler Siegel \\
+Problem Set 2
+}
+\author{Khyber Sen}
+\date{9/20/2019}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+    
+    \maketitle
+    
+    \section{Problem 1}
+        
+        \subsection{(1)}
+        Use the Euclidean algorithm to find the greatest common divisor of 234 and 624.  As a byproduct, write the greatest common divisor in the form $234x + 624y$ for some integers $x$ and $y$.
+            
+            \subsubsection{Solution}
+            The Euclidean algorithm for finding the GCD is
+            \begin{align}
+                \gcd(a, 0) &= a \\
+                \gcd(a, b) &= \gcd(b, a \enspace \% \enspace  b)
+            \end{align}
+            where `\%' means modulo.  Using this function to evaluate $\gcd(234, 624)$, we get
+            \begin{align}
+                \gcd(234, 624) &= \gcd(624, 234) \\
+                &= \gcd(234, 156) \\
+                &= \gcd(156, 78) \\
+                &= \gcd(78, 0) \\
+                &= 78
+            \end{align}
+            Since $\gcd(a, b) < \min(a, b)$, $x$ or $y$ must be negative. \\
+            In this case, $x = 3$ and $y = -1$ works: $(234 \cdot 3) + (624 \cdot -1) = 78 = \gcd(234, 624)$
+            
+        \subsection{(2)}
+        Factor 234 and 624 into products of powers of prime numbers as in the fundamental theorem of arithmetic.  Use this to find their greatest common divisor $\gcd(234, 624)$ and least common multiple $\lcm(234, 624)$.
+            
+            \subsubsection{Solution}
+            \begin{align}
+                234 &= 3 \cdot 78 \\
+                624 &= 8 \cdot 78, 8 = 2^3 \\
+                78 &= 2 \cdot 3 \cdot 13 \\
+                \therefore 234 &= 2 \cdot 3^2 \cdot 13 \\
+                \therefore 624 &= 2^4 \cdot 3 \cdot 13
+            \end{align}
+            Therefore, $\gcd(234, 624) = 2 \cdot 3 \cdot 13 = 78$ and $\lcm(234, 624) = 2^4 \cdot 3^2 \cdot 13 = 1872$.
+        
+    \section{Problem 2}
+    Give an example of a group of order 8 which is not cyclic.
+        
+        \subsection{Solution}
+        Let $G = {\mathbb{Z}/2\mathbb{Z}}^3 = \mathbb{Z}/2\mathbb{Z} \times \mathbb{Z}/2\mathbb{Z} \times \mathbb{Z}/2\mathbb{Z}$.  Therefore, $\forall$ $(a, b, c) \in G$, $(a, b, c)^2 = (a^2, b^2, c^2) = (0, 0, 0)$, since each of the component groups are of order 2.  This means elements of $G$ are all of order 2 (except (0, 0, 0), which is of order 1 $\leq$ 2), but $G$ itself is of order 8, meaning none of the elements of $G$ can generate $G$, and thus $G$ isn't cyclic.
+        
+    \section{Problem 3}
+    Let $p$ be a prime number.  Prove that $\sqrt{p}$ is irrational.
+        
+        \subsection{Solution}
+        Assume that $\sqrt{p}$ is rational.  Thus, it can be expressed as the ratio of natural numbers: $\sqrt{p} = \frac{a}{b}$, where $a, b \in \mathbb{N}$.  In general, $a$ and $b$ are just supposed to be integers, but since $\sqrt{p}$ is positive, we can restrict $a$ and $b$ to the naturals.  Since $\sqrt{p} = \frac{a}{b}$, $p = \frac{a^2}{b^2}$ and $a^2 = p b^2$.  Since $a^2$ and $b^2$ are squares, their prime factorizations contain an even number of each prime, since there are twice as many of each prime factor in $a^2$ as there is in $a$.  However, since $a^2 = p b^2$ and $p$ is a prime, $a^2$ must have an odd number of $p$'s in its prime factorization: the 1 $p$ and the even number of $p$ prime factors of $b^2$.  This is a contradiction, so therefore, $\sqrt{p}$ must be irrational.
+        
+    \section{Problem 4}
+    Prove that for any integers $a, b, c \in \mathbb{Z}$, we have $a^2 + b^2 \neq 3c^2$.
+        
+        \subsection{Solution}
+        I assume $a, b, c$ are supposed to be nonzero, because $0^2 + 0^2 = 3 \cdot 0^2$, which would be a contradiction.  Therefore, I'm proving $\forall$ $a, b, c \in \mathbb{Z} \setminus \{0\}$, $a^2 + b^2 \neq 3c^2$.
+        
+        First, assume $\exists$ $a, b, c \in \mathbb{Z} \setminus \{0\}$ s.t.\ $a^2 + b^2 = 3c^2$.  WLOG let $\gcd(a, b, c) = 1$, since otherwise $(a', b', c') = \left(\frac{a}{\gcd(a, b, c)}, \frac{b}{\gcd(a, b, c)}, \frac{c}{\gcd(a, b, c)}\right)$ is a solution as well and we can just consider that one.  Since squares are 0 or 1 (mod 4) ($[0]^2 = [0]$, $[1]^2 = [1]$, $[2]^2 = [4] = [0]$, $[3]^2 = [9] = [1]$), we know that $a^2 + b^2$ is either 0, 1, or 2 (mod 4), and that $3c^2$ is either 0 or 3 (mod 4).  For $a^2 + b^2 = 3c^2$, then, $a^2 + b^2 \equiv 3c^2 \equiv 0$ (mod 4), and thus $a^2 \equiv b^2 \equiv c^2 \equiv 0$ (mod 4).  Therefore, $\gcd(a, b, c) \equiv 0$ (mod 4), which contradicts $\gcd(a, b, c) = 1$.  Thus, the assumption that $\exists$ nonzero $a, b, c$ s.t.\ $a^2 + b^2 = 3c^2$ is false.
+        
+    \section{Problem 5}
+    Compute the remainder when $37^{100}$ is divided by $29$.
+        
+        \subsection{Solution}
+        Let $f(n) = n \enspace \% \enspace 29$.
+        \begin{align}
+               37^{100} \enspace \%\enspace 29
+            &= f(36^{100}) \\
+            &= f(f(37)^{100}) \\
+            &= f(8^{100}) \\
+            &= f((8^5)^{20}) \\
+            &= f(f(32768)^{20}) \\
+            &= f(27^{20}) \\
+            &= f((-2)^{20}) \\
+            &= f((2^{10})^2) \\
+            &= f(f(1024)^2) \\
+            &= f(9^2) \\
+            &= f(81) \\
+            &= 23
+        \end{align}
+        
+    \section{Problem 6}
+        
+        \subsection{(1)}
+        Find all subgroups of $S_3$, the symmetric group on three elements.  Is this group cyclic?  If so, what are its generators?
+            
+            \subsubsection{Solution}
+            First, name the elements of $S_3$:
+            \begin{align}
+                id = (1, 2, 3) \\
+                a = (1, 3, 2) \\
+                b = (2, 3, 1) \\
+                c = (2, 1, 3) \\
+                d = (3, 1, 2) \\
+                e = (3, 2, 1)
+            \end{align}
+            $S_3$ itself is a subgroup of $S_3$ and it's not cyclic. \\
+            $\{id\}$ is a trivial cyclic subgroup with generator $id$. \\
+            $\{id, a\}$ is a cyclic subgroup with generator $a$. \\
+            $\{id, c\}$ is a cyclic subgroup with generator $c$. \\
+            $\{id, e\}$ is a cyclic subgroup with generator $e$. \\
+            $\{id, b, d\}$ is a cyclic subgroup with generators $b$ and $d$.
+            
+        \subsection{(2)}
+        Final all possible numbers which arise as the order of a subgroup of $S_4$.  You do not need to rigorously justify your answer.
+            
+            \subsubsection{Solution}
+            $|S_4| = 4! = 24$.  The orders of the subgroups of a group are factors of the order of the group, so the orders of the subgroups of $S_4$ are 1, 2, 3, 4, 6, 8, 12, and 24.
+            
+    \section{Problem 7}
+        
+        \subsection{(1)}
+        Is the group $\mathbb{Z}/(3 \mathbb{Z}) \times \mathbb{Z}/(4 \mathbb{Z})$ cyclic?  If so, what are its generators?
+            
+            \subsubsection{Solution}
+            In general, $G = M \times N$, where $M = \mathbb{Z}/m\mathbb{Z}$ and $N = \mathbb{Z}/n\mathbb{Z}$, is cyclic when $m$ and $n$ are relatively prime, i.e.\ when $\gcd(m, n) = 1$, and when it's cyclic, it's only generator is $(1, 1)$.
+            
+            For $(a, b)$ to be a generator of $G$, both $a$ must be a generator of $M$ and $b$ must be a generator of $N$.  Furthermore, $\min(\{k \mid (a, b)^k = (1, 1)\}) = mn$ for $(a, b)$ to be a generator.  If it were less, then $(a, b)$ couldn't generate all the elements.  Since $\min(\{k \mid a^k = 1\}) = m$ and $\min(\{k \mid b^k = 1\}) = n$, we know in the general case that $\min(\{k \mid (a, b)^k = (1, 1)\}) = \lcm(m, n) = \frac{mn}{\gcd(m, n)}$.  In the case that $(a, b)$ is a generator, we must then have $mn = \frac{mn}{\gcd(m, n)}$, which implies that $\gcd(m, n) = 1 \implies \exists$ a generator $(a, b) \iff G$ is cyclic.
+            
+            Therefore, $\mathbb{Z}/3\mathbb{Z} \times \mathbb{Z}/4\mathbb{Z}$ is cyclic (because $\gcd(3, 4) = 1$.  Furthermore, it's generators are the Cartesian product of the sets of generators of each group, since the only requirement on $(a, b)$ to be a generator (besides $G$ being cyclic) is for $a$ to be a generator of $M$ and $b$ to be a generator of $N$.  In general, for $a$ to be a generator of $M$, $\gcd(a, m) = 1$, so generators$(M) = \{a \in M \mid \gcd(a, m) = 1\}$.  Thus, 
+            \begin{align}
+                \generators(G) &= \generators(M) \times \generators(N) \\
+                &= \{a \in M \mid \gcd(a, m) = 1\} \times \{b \in N \mid \gcd(b, n) = 1\} \\
+                &= \{1, 2\} \times \{1, 3\} \\
+                &= \{(1, 1), (1, 3), (2, 1), (2, 3)\}
+            \end{align}
+            
+        \subsection{(2)}
+        Is the group $\mathbb{Z}/(3 \mathbb{Z}) \times \mathbb{Z}/(3 \mathbb{Z})$ cyclic?  If so, what are its generators?
+            
+            \subsubsection{Solution}
+            By the above proof, $\mathbb{Z}/3\mathbb{Z} \times \mathbb{Z}/3\mathbb{Z}$ is not cyclic since $\gcd(3, 3) = 3 \neq 1$.
+            
+    \section{Problem 8}
+        
+        \subsection{(1)}
+        Find all subgroups of $\mathbb{Z}/(18 \mathbb{Z})$.  Is this group cyclic?  If so, what are its generators?
+            
+            \subsubsection{Solution}
+            Let $\langle g \rangle := \{g^n \mid n \in \mathbb{Z}\}$, i.e. the group generated by a generator.  Then the subgroups of $\mathbb{Z}/n\mathbb{Z}$ are $\{\langle g \rangle \mid n \enspace \% \enspace g = 0\}$, i.e. the subgroups are the groups generated by (i.e.\ multiples of) the factors of $n$.  Furthermore, $\langle g \rangle$ is isomorphic to $\mathbb{Z}/\frac{n}{g}\mathbb{Z}$ by $[a]_n \mapsto \left[\frac{a}{g}\right]_{\frac{n}{g}}$ and thus also cyclic.  Since the generators of $\mathbb{Z}/m\mathbb{Z}$ are $\{g \in 1..m \mid \gcd(g, m) = 1\}$, the generators of the subgroups are just the generators of $\mathbb{Z}/\frac{n}{g}\mathbb{Z}$ translated back across the isomorphism by multiplying by $g$.
+            
+            \pagebreak
+            
+            Using this Haskell code, here are the calculated subgroups and their generators pairs:
+            \begin{Verbatim}[xleftmargin=-2cm]
+                subgroupsGenerator n = [g | g <- [1..n], n `mod` g == 0]
+                subgroup n g = [k * g | k <- [0..(n `div` g - 1)]]
+                subgroups n = map (subgroup n) (subgroupsGenerator n)
+                generators n = [g | g <- [0..(n - 1)], gcd g n == 1]
+                scaledGenerators n g = map (* g) (generators (n `div` g))
+                subgroupsGenerators n = map (scaledGenerators n) (subgroupsGenerator n)
+                subgroupsAndGenerators n = zip (subgroups n) (subgroupsGenerators n) 
+                subgroupsAndGenerators 18
+            \end{Verbatim}
+            \begin{align}
+                & (\{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17\}, \{1, 5, 7, 11, 13, 17\}) \\
+                & (\{0, 2, 4, 6, 8, 10, 12, 14, 16\}, \{2, 4, 8, 10, 14, 16\}) \\
+                & (\{0, 3, 6, 9, 12, 15\}, \{3, 15\}) \\
+                & (\{0, 6, 12\}, \{6, 12\}) \\
+                & (\{0, 9\}, \{9\}) \\
+                & (\{0\}, \{0\})
+            \end{align}
+            
+        \subsection{(2)}
+        Compute the order of each element in $(\mathbb{Z}/(11 \mathbb{Z}))^{\times}$.  Is this group cyclic?  If so, what are its generators?
+            
+            \subsubsection{Solution}
+            11 is prime, so all of the positive numbers $< 11$ are relatively prime to it, so $(\mathbb{Z}/(11 \mathbb{Z}))^{\times} = \{1..10\}$.  For each element $a$, I just kept trying $a^k$ until $a^k \equiv 1$ (mod $n$) to find the order.  I did this using this (Haskell): 
+            \begin{Verbatim}[xleftmargin=-2cm]
+                group n = [a | a <- [0..(n - 1)], gcd a n == 1]
+                order n a = head [k | k <- [1..], a ^ k `mod` n == 1]
+                orders n = map (order n) (group n)
+                orders 11
+            \end{Verbatim}
+            Here are the results:
+            \begin{align}
+                \ord([1])  &= 1 \\
+                \ord([2])  &= 10 \\
+                \ord([3])  &= 5 \\
+                \ord([4])  &= 5 \\
+                \ord([5])  &= 5 \\
+                \ord([6])  &= 10 \\
+                \ord([7])  &= 10 \\
+                \ord([8])  &= 10 \\
+                \ord([9])  &= 5 \\
+                \ord([10]) &= 2
+            \end{align}
+            This group is cyclic because it has elements with order 10, which is the order of the group.  Thus, these elements, [2], [6], [7], and [8], are the generators.
+            
+        
+\end{document}
