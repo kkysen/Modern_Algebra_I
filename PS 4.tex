@@ -1,0 +1,241 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{ulem}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{fancyvrb}
+\usepackage{cleveref}
+\usepackage{centernot}
+
+\title{
+Math GU4041, Fall 2019 \\
+Modern Algebra I, Prof.\ Kyler Siegel \\
+Problem Set 4
+}
+\author{Khyber Sen}
+\date{10/11/2019}
+
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\rot}{rot}
+\DeclareMathOperator{\refl}{ref}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+    
+    \maketitle
+    
+    \section{Problem 1}
+        
+        \subsection{(a)}
+        Determine the center $Z(D_8)$ of the dihedral group $D_8$ (i.e.\ $D_{2 \cdot 4}$).
+            
+            \subsubsection{Solution}
+            For any dihedral group $D_{2n}$, let $r$ be a rotation to the next vertex, and let $s$ be a reflection about the first vertex (doesn't matter which one, but the same one).  Then $D_{2n} = \langle r \rangle \cup s \langle r \rangle$, where $\langle r \rangle$ are the cyclic rotations and $s \langle r \rangle$ are the reflections.
+            
+            The center $Z(G)$ is defined as $\{g \in G \mid gx = xg \thickspace \forall \thickspace x \in G\}$, i.e.\ the set of elements that commute with every other element.  The identity always commutes with everything, so $e \in Z(G)$ $\forall$ groups $G$.  Thus, $e = r^0 \in Z(D_{2n})$.
+            
+            The rotations $\langle r \rangle$ are cyclic and thus isomorphic to $\mathbb{Z}/\frac{n}{2}\mathbb{Z}$, so they're abelian.  Since they're abelian, we only have to worry about the reflections for checking if an element is in the center.  
+            
+            If the rotation $r^k$ commutes with the reflection $s$, then
+            \begin{align}
+                r^k s &= s r^k \\
+                r^k s r^i &= s r^k r^i \\
+                r^k s r^i &= s r^i r^k \enspace \because{} \enspace \text{rotations commute} \\
+                r^k (s r^i) &= (s r^i) r^k
+            \end{align}
+            Thus, $r^k$ commutes with any reflection $sr^i$.  We already know $r^k$ will commute with any rotation, so then $r^k$ will be in the center.  The only rotation the reflection $s$ commutes with is a $180^{\circ}$ rotation, which is $r^{\frac{n}{2}}$ is $n$ is even, and which doesn't exist if $n$ is odd.  Thus, $Z(D_{2n}) = \begin{cases}
+                n : \text{odd} &\implies \{e\} \\
+                n : \text{even} &\implies \{e, r^{\frac{n}{2}}\}
+            \end{cases}$.  Since 4 is even, $Z(D_8) = Z(D_{2 \cdot 4}) = \{r^0, r^2\} = \{e, r^2\}$.
+        
+        \pagebreak
+        
+        \subsection{(b)}
+        Give the multiplication table for the quotient group $D_8/Z(D_8)$.  Which familiar group is this isomorphic to?
+        
+            \subsubsection{Solution}
+            The left cosets of $Z(D_{2 \cdot 4})$ in $D_{2 \cdot 4}$ are
+            \begin{align}
+                r^0 \{r^0, r^2\} &= \{r^0, r^2\} = r^2 \{r^0, r^2\} \\
+                r^1 \{r^0, r^2\} &= \{r^1, r^3\} = r^3 \{r^0, r^2\} \\
+                sr^0 \{r^0, r^2\} &= \{sr^0, sr^2\} = sr^2 \{r^0, r^2\} \\
+                sr^1 \{r^0, r^2\} &= \{sr^1, sr^3\} = sr^3 \{r^0, r^2\}
+            \end{align}
+            Thus $D_{2 \cdot 4}/Z(D_{2 \cdot 4}) \cong \{\{r^0, r^2\}, \{r^1, r^3\}, \{sr^0, sr^2\}, \{sr^1, sr^3\}\} \cong \{e, r, s, sr\} \cong D_{2 \cdot 2}$.  Thus the multiplication table is (the same as the multiplication table for $D_{2 \cdot 2}$): \\
+            
+            $\begin{array}{ c|c|c|c|c| } 
+                \cdot & e  & r  & s  & sr \\ \hline
+                e     & e  & r  & s  & sr \\ \hline
+                r     & r  & e  & sr & s  \\ \hline
+                s     & s  & sr & e  & r  \\ \hline
+                sr    & sr & s  & r  & e  \\ \hline
+            \end{array}$
+    
+    \section{Problem 2}
+    For each of the following permutations in $S_6$, write out its cyclic decomposition, and determine whether or not it is an element of the alternating subgroup $A_6$.
+        
+        \subsection{(a)}
+        $\begin{pmatrix}
+            1 & 2 & 3 & 4 & 5 & 6 \\
+            6 & 3 & 4 & 5 & 2 & 1
+        \end{pmatrix}$
+            
+            \subsubsection{Solution}
+            $(2345)(16) = (23)(34)(45)(16) \in A_6$
+        
+        \subsection{(b)}
+        $\begin{pmatrix}
+            1 & 2 & 3 & 4 & 5 & 6 \\
+            4 & 3 & 6 & 2 & 1 & 5
+        \end{pmatrix}$
+            
+            \subsubsection{Solution}
+            $(142365) = (14)(42)(23)(36)(65) \notin A_6$
+        
+        \subsection{(c)}
+        $\begin{pmatrix}
+            1 & 2 & 3 & 4 & 5 & 6 \\
+            4 & 5 & 6 & 1 & 2 & 3
+        \end{pmatrix}$
+            
+            \subsubsection{Solution}
+            $(14)(25)(36) \notin A_6$
+    
+    \section{Problem 3}
+        
+        \subsection{(a)}
+        Given a group $G$ and a subset $A \subseteq G$, the \textit{centralizer} of $A$ in $G$ is defined by $C_G(A) := \{g \in G \mid gag^{-1} = a \thickspace \forall \thickspace a \in A\}$.  Prove that $C_G(A)$ is a subgroup.  Is it a normal subgroup?  You should rigorously justify your answer.
+            
+            \subsubsection{Solution}
+            To show $C_G(A)$ is a subgroup, we just need to show it's closed under multiplication and inverses, i.e.\ that $\forall$ $g, h \in C_G(A)$, $gh^{-1} \in C_G(A)$.  Thus, we need to show $(gh^{-1})a(gh^{-1})^{-1} = a$ $\forall$ $a \in A$:
+            \begin{align}
+                (gh^{-1})a(gh^{-1})^{-1} 
+                    &= (gh^{-1})a\left((h^{-1})^{-1}g^{-1}\right) \\
+                    &= g\left(h^{-1}a(h^{-1})^{-1}\right)g^{-1} \\
+                    &= gag^{-1} \\
+                    &= a
+            \end{align}
+            Thus, $C_G(A) \subseteq G$.  However, $C_G(A)$ is not always a normal subgroup of $G$.  For example, let $G = S_3$ and $A = \{(), (12)\} \subseteq S_3$.  Then $C_G(A) = C_{S_3}(\{(), (12)\} = \{(), (12)\} \centernot{\unlhd} S_3$.  In general, this is because, for $C_G(A)$ to be a normal subgroup of $G$, it must be that $g C_G(A) g^{-1} = C_G(A)$ $\forall$ $g \in G$.  If $g \in A$, this is clearly true by the centralizer definition, but it doesn't always work when $g \notin A$, like for $S_3$ and $\{(), (12)\}$.
+        
+        \subsection{(b)}
+        For each element $x \in S_3$, determine the centralizer of $\{x\}$.
+            
+            \subsubsection{Solution}
+            Since $C_G(A)$ is a subgroup of $G$, by Lagrange's Theorem, $|C_G(A)|$ must be a factor of $|G|$.  Thus $|C_G(\{x\})| \in \{1, 2, 3, 6\}$ when $x \in S_3$.  Furthermore, $C_G(\{x\}) = \{g \in G \mid gag^{-1} = a \thickspace \forall \thickspace a \in \{x\}\} = \{g \in G \mid gxg^{-1} = x\}$.  Since $x^k x (x^k)^{-1} = x^{k + 1 - k} = x$, $\langle x \rangle \subseteq C_G(\{x\})$, i.e.\ the centralizer of $\{x\}$ must contain at least the cyclic subgroup generated by $x$.
+            
+            $C_{S_3}(\{e\}) = S_3$ because $geg^{-1} = gg^{-1} = e$.  As for the other elements of $S_3$, they are of the form $(ab)$ or $(abc)$.  $(ab)(abc) = (bc)$ but $(abc)(ab) = (ac)$, meaning they don't commute with everything, and thus the centralizers are not all of $S_3$, unlike for $\{e\}$.  There's no subgroup in-between the cyclic subgroups and the group itself, and since the centralizer is a subgroup, we must have that $C_{S_3}(\{x\}) = \langle x \rangle$ when $x \neq e$.
+    
+    \section{Problem 4}
+        
+        \subsection{(a)}
+        Given a group $G$ and a subset $A \subseteq G$, the \textit{normalizer} of $A$ in $G$ is defined by $N_G(A) := \{g \in G \mid gAg^{-1} = A\}$.  Prove that $N_G(A)$ is a subgroup.  Is it a normal subgroup?  You should rigorously justify your answer.
+            
+            \subsubsection{Solution}
+            To show $N_G(A)$ is a subgroup, we just need to show it's closed under multiplication and inverses, i.e.\ that $\forall$ $g, h \in N_G(A)$, $gh^{-1} \in N_G(A)$.  Thus, we need to show $(gh^{-1})A(gh^{-1})^{-1} = A$:
+            \begin{align}
+                (gh^{-1})A(gh^{-1})^{-1} 
+                    &= (gh^{-1})A\left((h^{-1})^{-1}g^{-1}\right) \\
+                    &= g\left(h^{-1}A(h^{-1})^{-1}\right)g^{-1} \\
+                    &= gAg^{-1} \\
+                    &= A
+            \end{align}
+            Thus, $N_G(A) \subseteq G$.  However, $N_G(A)$ is not always a normal subgroup of $G$.  For example, let $G = S_3$ and $A = \{(), (12)\} \subseteq S_3$.  Then $N_G(A) = N_{S_3}(\{(), (12)\} = \{(), (12)\} \centernot{\unlhd} S_3$.  In general, this is because, for $N_G(A)$ to be a normal subgroup of $G$, it must be that $g N_G(A) g^{-1} = N_G(A)$ $\forall$ $g \in G$.  If $g \in A$, this is clearly true by the normalizer definition, but it doesn't always work when $g \notin A$, like for $S_3$ and $\{(), (12)\}$.
+        
+        \subsection{(b)}
+        For each element $x \in S_3$, determine the normalizer of $\langle x \rangle$.
+            
+            \subsubsection{Solution}
+            First, $\langle () \rangle = \{e\}$, so $N_{S_3}(\langle () \rangle) = S_3$ is trivial.  For the other cyclic subgroups, we can check manually, although the normalizers of all the $\langle x \rangle$ where $x$ is a transposition will basically be the same (beyond renaming the elements).  Thus, $N_{S_3}(\langle (ab) \rangle) = \langle (ab) \rangle$, where $(ab)$ are all three of the transpositions in $S_3$.  Since $\langle (123) \rangle \unlhd S_3$, we know $N_{S_3}(\langle (123) \rangle) = S_3$ automatically.
+    
+    \section{Problem 5}
+    The \textit{quaternion group} $Q_8$ is a group of order eight, defined as a set by $\{1, -1, i, -i, j, -j, k, -k\}$.  The group multiplication is defined such that we have
+    \begin{align}
+        (-1) \cdot (-1) &= 1 \\
+        i \cdot j &= k \\
+        j \cdot i &= -k \\
+        j \cdot k &= i \\
+        k \cdot i &= j \\
+        i \cdot k &= -j \\
+        1 \cdot k &= k \\
+        k \cdot (-1) &= -k
+    \end{align}
+    and so on.  You might be able to guess the full pattern from this, but see $\S1.5$ in Dummit and Foote for the full definition of the multiplication structure.  You may take for granted that this defines a group, but you should convince yourself.
+        
+        \subsection{(a)}
+        Determine the center of $Q_8$.
+            
+            \subsubsection{Solution}
+            None of the $i, j, k$ and their negatives commute with each other, so they can't be in the center, but $1$ and $-1$ commute with everything, so therefore $Z(Q_8) = \{1, -1\}$.
+        
+        \subsection{(b)}
+        List all normal subgroups of $Q_8$.  You do not need to rigorously justify your answer.
+            
+            \subsubsection{Solution}
+            Every subgroup of $Q_8$ is normal: $Q_8$, $\langle i \rangle$, $\langle j \rangle$, $\langle k \rangle$, $\langle -1 \rangle = Z(Q_8)$, and $\langle 1 \rangle = \{e\}$.
+        
+        \subsection{(c)}
+        Prove that $Q_8$ is not isomorphic to $C_8$, $C_2 \times C_4, C_2 \times C_2 \times C_2$, or $D_8$.
+            
+            \subsubsection{Solution}
+            \begin{itemize}
+                
+                \item $C_8$, $C_2 \times C_4$ and $C_2 \times C_2 \times C_2$ are abelian (the direct product preserves abelianality since it's element-wise), but $Q_8$ isn't, so $Q_8 \not\cong C_8$, $Q_8 \not\cong C_2 \times C_4$, and $Q_8 \not\cong C_2 \times C_2 \times C_2$.
+                
+                \item $D_8$ has an abelian subgroup of order 4, the rotations, but none of the subgroups of order 4 in $Q_8$, $\langle i \rangle$, $\langle j \rangle$, and $\langle k \rangle$, are abelian.  Therefore, $Q_8 \not\cong D_8$.
+                
+            \end{itemize}
+        
+    \section{Problem 6}
+    Give a proof of the \textit{First Isomorphism Theorem} (sometimes called the \textit{Fundamental Theorem of Homomorphisms}): 
+    \begin{quote}
+        If $G$ and $H$ are groups and $\Phi: G \to H$ is a homomorphism, then $\ker(\Phi)$ is a normal subgroup of $G$, and the quotient group $G/\ker(\Phi)$ is isomorphic to $\im(\Phi)$.
+    \end{quote}
+        
+        \subsection{Solution}
+        To prove $G/\ker(\Phi) \cong \im(\Phi)$, where $\Phi: G \to H$ is a homomorphism and $G$ is a group, we need to construct an isomorphism $f: G/\ker(\Phi) \to \im(\Phi)$.  Let $f(g \ker(\Phi)) = \Phi(g)$.  Now we just need to show $f$ is well-defined, a homomorphism, and a bijection.
+        
+        To show that's $f$ is well-defined, we need to show that if $a \in g \ker(\Phi)$, then $\Phi(a) = \Phi(g)$, and thus $g \ker(\Phi)$ is mapped to a single value, $\Phi(g)$.  If $a \in g \ker(\Phi)$, then $\exists$ $b \in \ker(\Phi)$ s.t.\ $a = bg$.  Thus, $\Phi(a) = \Phi(bg) = \Phi(b)\Phi(g) = e\Phi(g) = \Phi(g)$.  Thus, $f$ is well-defined.
+        
+        To show $f$ is a homomorphism,
+        \begin{align}
+            f((g \ker(\Phi))(h \ker(\Phi))
+                &= f((gh) \ker(\Phi)) \\
+                &= \Phi(gh) \\
+                &= \Phi(g) \Phi(h) \\
+                &= f(g \ker(\Phi)) f(h \ker(\Phi))
+        \end{align}
+        Thus, $f$ is a homomorphism.
+        
+        To show $f$ is bijective, we first show it's injective:
+        \begin{align}
+            g \ker(\Phi) \in \ker(f)
+                &\iff f(g \ker(\Phi)) = e \\
+                &\iff \Phi(g) = e \\
+                &\iff g \in \ker(\Phi) \\
+                &\iff g \ker(\Phi) = \ker(\Phi) = e \ker(\Phi) = e_{G/\ker(\Phi)}
+        \end{align}
+        Thus, $\ker(f) = e\ker(\Phi)$, which is the identity of $G/\ker(\Phi)$, so therefore $f$ must be injective.  
+        
+        To show $f$ is surjective, 
+        \begin{align}
+            h \in \im(\Phi)
+                &\iff \exists \text{ } g \in G \text{ s.t.\ } \Phi(g) = h \\
+                &\iff f(g \ker(\Phi)) = \Phi(g) = h \\
+                &\iff h \in \im(f)
+        \end{align}
+        Thus, $f$ is surjective.  Since it's also injective, it's bijective.  Since it's also a homomorphism, it's isomorphic, so therefore $G/\ker(\Phi) \cong \im(\Phi)$.
+    
+    \pagebreak
+    
+    \section{Problem 7}
+    Let $\Phi: S_3 \to G$ be a homomorphism from the symmetric group $S_3$ to some group $G$.  What are the possible values of $|\im(\Phi)|$, the order of the image?  You should rigorously justify your answer.
+        
+        \subsection{Solution}
+        $S_3/\ker(\Phi) \cong \im(\Phi)$ by the First Isomorphism Theorem, so $|\im(\Phi)| = |S_3/\ker(\Phi) \cong \im(\Phi)| = \frac{|S_3|}{|\ker(\Phi)|} = \frac{6}{|\ker(\Phi)|}$.  $|\ker(\Phi)| \in \mathbb{Z}^+$ and $\frac{6}{|\ker(\Phi)|} \in \mathbb{Z}^+$, i.e.\ the order of a group must be a positive integer.  Thus, $|\ker(\Phi)|$ and $|\im(\Phi)|$ must be factors of $|S_3| = 6$, so $|\im(\Phi)| \in \{1, 2, 3, 6\}$.
+    
+        
+\end{document}
