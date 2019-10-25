@@ -1,0 +1,184 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{ulem}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{fancyvrb}
+\usepackage{cleveref}
+\usepackage{centernot}
+\usepackage{tikz}
+
+\usetikzlibrary{positioning}
+
+\title{
+Math GU4041, Fall 2019 \\
+Modern Algebra I, Prof.\ Kyler Siegel \\
+Problem Set 5
+}
+\author{Khyber Sen}
+\date{10/25/2019}
+
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\GL}{GL}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+    
+    \maketitle
+    
+    \section{Problem 1}
+    Let $G$ be a group and let $A$ and $B$ be normal subgroups such that $AB = G$ and $|A \cap B| = 1$.  Prove that $G$ is isomorphic to $A \times B$.
+        
+        \subsection{Solution}
+        NTS $A, B \unlhd G$, $AB = G$, $|A \cap B| = 1 \implies G \cong A \times B$.
+        
+        To prove $G \cong A \times B$, we need to construct an isomorphism $f: A \times B \to AB = G$.  Let $f = (a, b) \mapsto ab$.  To show $f$ is injective, we need to show $\ker(f) = \{e\}$.  $f((e, e)) = ee = e$, so $e \in \ker(f)$.  Now we just need to show that if $(a, b) \neq (e, e)$, then $f((a, b)) \neq e$.  Assume it does.  Then we have $f((a, b)) = ab = e$.  Therefore, $a = b^{-1}$.  Since $B$ is a group and $b \in B$, we know $b^{-1} \in B$.  But since $|A \cap B| = 1$, an element of $A$, $a$, can't equal an element in $B$, $b^{-1}$ (unless $a = b = e$, which we've already handled).  This is a contradiction, so $\ker(f) = \{e\}$, meaning $f$ is injective.
+        
+        Showing $f$ is surjective is trivial, since $AB$ is by definition $\{ab \mid a \in A$, $b \in B\}$.  Showing $f$ is a homomorphism is very simple, too.  $f((a, b)(c, d)) = f((ab, cd)) = (ab)(cd) = f((a, b)) f((c, d))$, so $f$ is a homomorphism.  Thus $f$ is an isomorphism, so $G \cong A \times B$.
+    
+    \section{Problem 2}
+    Let $G$ be a group, and let $A$ and $B$ be normal subgroups of $G$ such that $G = AB$.  Prove that $G/(A \cap B)$ is isomorphic to $(G/A) \times (G/B)$.
+        
+        \subsection{Solution}
+        NTS $A, B \unlhd G$, $AB = G \implies G/(A \cap B) \cong (G/A) \times (G/B)$.
+        
+        To prove $G/(A \cap B) \cong (G/A) \times (G/B)$, we will construct a homomorphism $f: G \to (G/A) \times (G/B)$ and then apply the 1st Isomorphism Theorem to it.  Let $f = g \mapsto (gA, gB)$.  This is pretty trivially a homomorphism: $f(g)f(h) = (gA, gB)(hA, hB) = ((gh)A, (gh)B) = f(gh)$.  It's also trivially surjective, so $\im(f) = (G/A) \times (G/B)$.  Now we check what its kernel is.  If $f(g) = e = (eA, eB) = (A, B)$, then $(gA, gB) = (A, B)$, so $gA = A$ and $gB = B$, meaning $g \in A$ and $g \in B$, so $g \in A \cap B$.  Thus, $\ker(f) = A \cap B$.  Now we apply the 1st Isomorphism Theorem: $G/\ker(f) \cong \im(f) \implies G/(A \cap B) \cong (G/A) \times (G/B)$.
+    
+    \section{Problem 3}
+    For $n \in \mathbb{Z}^+$ and $\sigma \in S_n$, the \textit{cycle type} of $\sigma$ is obtained by writing the cycle decomposition of $\sigma$ and then writing the lengths $n_1, ..., n_r$ of the resulting cycles in nondecreasing order $n_1 \leq ... \leq n_r$.  Here $r$ is the number of cycles in the cycle decomposition of $\sigma$.  Note that we have $n_1 + ... + n_r = n$, and we say that $n_1, ..., n_r$ is a \textit{partition} of $n$.  For example, if $n = 7$ and $\sigma = (1 3 2)(4 6)(5)(7)$, then the cycle type of $\sigma$ is $1, 1, 2, 3$.
+    
+    Prove that two elements of $S_n$ are conjugate if and only if they have the same cycle type.  Conclude that the number of conjugacy classes of $S_n$ equals the number of partitions of $n$.
+        
+        \subsection{Solution}
+        By definition, two elements $a, b \in S_n$ are conjugate if $\exists$ $g \in S_n$ s.t.\ $gag^{-1} = b$.  
+        
+        To prove conjugate elements have the same cycle type, we will first prove that the cycle $(n_1, ..., n_k)$ is conjugate to $(g(n_1), ..., g(n_k))$ by $g$.  That is, $g \circ (n_1, ..., n_k) \circ g^{-1} = (g(n_1), ..., g(n_k))$:
+        \begin{align}
+            (g \circ (n_1, ..., n_k) \circ g^{-1} \circ g)(n_i)
+                &= (g \circ (n_1, ..., n_k))(n_i) \\
+                &= g((n_1, ..., n_k)(n_i)) \\
+                &= g(n_{i + 1})
+        \end{align}
+        Thus, $g \circ (n_1, ..., n_k) \circ g^{-1}$ maps $n_i$ to $g(n_{i + 1})$, which is exactly what the cycle $(g(n_1), ..., g(n_k))$ does.  Therefore, they are equal, and thus $(n_1, ..., n_k)$ is conjugate to $(g(n_1), ..., g(n_k))$ by $g$.
+        
+        Now we can extend this from just cycles to permutations in general.  Every permutation in $S_n$ can be decomposed into a cycle decomposition, $m_1 ... m_k$.  We will show that this cycle decomposition, which is the same as the permutation itself, is conjugate to $(g(m_{1_1}), ..., g(m_{1_{n_1}})) ... (g(m_{k_1}), ..., g(m_{k_{n_k}}))$ by $g$, where $n_i$ is the length of the $i$th cycle and there are $k$ cycles in the permutation.  Note that the cycles $m_i$ in the permutation are themselves permutations, so we can separate them and multiply (compose) other permutations in-between them, and then apply the above lemma to each cycle:
+        \begin{align}
+            g m_1 ... m_k g^{-1} 
+                &= g m_1 g^{-1} g m_2 g^{-1} ... g m_k g^{_1} \\
+                &= (g(m_{1_1}), ..., g(m_{1_{n_1}})) ... (g(m_{k_1}), ..., g(m_{k_{n_k}}))
+        \end{align}
+        In $(g(m_{1_1}), ..., g(m_{1_{n_1}})) ... (g(m_{k_1}), ..., g(m_{k_{n_k}}))$, the lengths of the cycles matches up exactly with $m_1 ... m_k$, so their cycles types are the same.
+        
+        To prove permutations with the same cycle type are conjugate, note that we can match up their cycles.  If each corresponding cycle is conjugate by the same $g \in S_n$, then the whole permutations will be conjugate by $g$.  Let $(a_1, ..., a_k)$ and $(b_1, ..., b_k)$ be two arbitrary cycles of the same length.  We will show there is always some $g \in S_n$ that conjugates them.  Let $g = a_i \mapsto b_i$.  Then, by the above lemma, $(a_1, ..., a_k)$ is conjugate to $(g(a_1), ..., g(a_k)) = (b_1, ..., b_k)$ by $g$.  Now we just have to show we can find a single $g$ that conjugates all the cycles in two permutations.  Since the cycles in permutation are disjoint in the sense that they map different numbers, we can just compose all the different $g_i$'s that conjugate each of the matching cycles.  This $g$ will work the same on each of the matching cycles because the disjoint nature of the cycles ensures none of the different parts of $g$, the $g_i$'s, will interfere with each other.
+        
+        For the second statement, that the number of conjugacy classes of $S_n$ equals the number of partitions of $n$, this follows from the above statement, that conjugacy is equivalent to having the same cycle types.  If two permutations are in the same conjugacy class, then they are conjugates, meaning they have the same cycle type, meaning they have the same partition of $n$.  These are all bijective statements, so we get a bijection between conjugacy classes of $S_n$ and partitions of $n$, so the sets of each must have the same cardinality.
+        
+    \section{Problem 4}
+    Let $G$ be a group and let $A$ and $B$ be subgroups such that we have $A \unlhd B$ and $B \unlhd G$.  Do we have $A \unlhd G$?
+        
+        \subsection{Solution}
+        NTS if $A, B \subseteq G$, $A \unlhd B \unlhd G \implies A \unlhd G$?
+        
+        We can't conclude $A \unlhd G$.  For example, consider $D_8$.  Since every subgroup of index 2 is normal, we have that $\{e, s\} \unlhd \{e, s, r^2, sr^2\} \unlhd D_8$, but $\{e, s\} \centernot{\unlhd} D_8$ because $r\{e, s\}r = \{r, sr\}r = \{r^2, sr^2\} \neq \{e, s\}$.
+    
+    \section{Problem 5}
+    List all possible composition series for $Q_8$ and $D_8$.  How many are there for each?  What are the composition factors in each case?  You do not need to rigorously justify your answer.
+        
+        \subsection{Solution}
+        $Q_8$ has 3 composition series: 
+        \begin{align}
+            \{1\} = \langle 1 \rangle \unlhd \langle -1 \rangle \unlhd \langle x \rangle= Q_8 \thickspace \forall \thickspace x \in \{i, j, k\}
+        \end{align}
+        For all of them, the composition factors are all isomorphic to $C_2$, the only order 2 group after isomorphisms.
+        
+        $D_8$ has 7 composition series:
+        \begin{enumerate}
+            \item $\{1\} \unlhd \langle s \rangle \unlhd \langle s, r^2 \rangle= D_8$
+            \item $\{1\} \unlhd \langle r^2 \rangle \unlhd \langle s, r^2 \rangle= D_8$
+            \item $\{1\} \unlhd \langle r^2 \rangle \unlhd \langle r \rangle= D_8$
+            \item $\{1\} \unlhd \langle sr^k \rangle \unlhd \langle sr^k ,sr^{k + 2} \rangle= D_8$ $\forall$ $k \in 1..4$ (4 composition series)
+        \end{enumerate}
+        Again, the composition factors are all isomorphic to $C_2$, the only order 2 group after isomorphisms.
+    
+    \section{Problem 6}
+    Describe a normal subgroup $N$ of $S_4$ of index 6.  What is the isomorphism type of the quotient group $S_4/N$?  Describe the lattice of subgroups of $S_4$ containing $N$, and match these with the lattice of subgroups of $S_4/N$ as in the Fourth Isomorphism Theorem.
+        
+        \subsection{Solution}
+        Let $N = \{(), (1, 2)(2, 3), (1, 3)(2, 4), (1, 4)(2, 3)\} \cong {C_2}^2$.  \\
+        Then $[S_4 : N] = 6$ and $S_4/N \cong S_3$, so its isomorphism type is $S_3$. \\
+        
+        \noindent
+        Here is the lattice of subgroups of $S_4$ containing $N \cong {C_2}^2$:
+        \begin{tikzpicture}[node distance=2cm]
+            \node(S4) {$S_4$};
+            \node(D4) [below left=1cm and 1cm of S4]{3 x $D_4$};
+            \node(A4) [below right=1cm and 1cm of S4]{$A_4$};
+            \node(C22) [below right=1cm and 1cm of D4]{${C_2}^2$};
+            \draw(S4) -- (D4) node [midway, fill=white]{3};
+            \draw(S4) -- (A4) node [midway, fill=white]{2};
+            \draw(D4) -- (C22) node [midway, fill=white]{2};
+            \draw(A4) -- (C22) node [midway, fill=white]{3};
+        \end{tikzpicture}
+        
+        \noindent
+        And here is the matching subgroup lattice of $S_4/N \cong S_4/{C_2}^2 \cong S_3$:
+        \begin{tikzpicture}[node distance=2cm]
+            \node(S3) {$S_3$};
+            \node(C2) [below left=1cm and 1cm of S3]{3 x $C_2$};
+            \node(A3) [below right=1cm and 1cm of S3]{$A_3$};
+            \node(1) [below right=1cm and 1cm of C2]{$1$};
+            \draw(S3) -- (C2) node [midway, fill=white]{3};
+            \draw(S3) -- (A3) node [midway, fill=white]{2};
+            \draw(C2) -- (1) node [midway, fill=white]{2};
+            \draw(A3) -- (1) node [midway, fill=white]{3};
+        \end{tikzpicture}
+    
+    \pagebreak
+    
+    \section{Problem 7}
+    Prove that every finite group $G$ is isomorphic to a subgroup of the general linear group $\GL_n(\mathbb{C})$ for some $n \in \mathbb{Z}^+$.
+        
+        \subsection{Solution}
+        NTS $G:$ finite group $\implies$ $\exists$ $n \in \mathbb{Z}^+, H \subseteq \GL_n(\mathbb{C})$ s.t.\ $G \cong H$.
+        
+        In general, the statement $G$ is isomorphic to a subgroup $H \subseteq S$ is equivalent to saying there exists an injective homomorphism $f: G \to S$.  This is because $G \cong H$, so there exists a bijective homomorphism, an isomorphism, $g: G \to H$.  $f$ is just $g$ with a larger codomain that includes all of $S$.
+        
+        Thus Cayley's Theorem is equivalent to saying there exists an injective homomorphism $f: G \to S_n$ for all finite groups $G$ and some $n \in \mathbb{Z}^+$.  To show that every finite group $G$ is also isomorphic to a subgroup of $\GL_n(\mathbb{C})$ for some $n \in \mathbb{Z}^+$, we just need to show there exists an injective homomorphism $h: G \to \GL_n(\mathbb{C})$.  We can do this by finding an injective homomorphism $g: S_n \to \GL_n(\mathbb{C})$.  Since the composition of injective homomorphisms is an injective homomorphism, we have that $h = g \circ f$.
+        
+        Now we just need to show $g$ exists.  Let $g = a \mapsto (i, j) \mapsto \delta_{i, a(j)}$, where $\delta$ is the Kronecker delta and I'm writing the matrix in function form.  $g(a)$ is just a permutation of the rows of $I_n$, so it's row-equivalent to $I_n$, and thus invertible, meaning $g(a) \in GL_n(\mathbb{R}) \subset GL_n(\mathbb{C})$, so $g$ indeed maps $S_n$ to $GL_n(\mathbb{C})$.  To show $g$ is a homomorphism, $(g(a)g(b))_{i, j} = \sum\limits_{k = 1}^n g(a)_{i, k} g(b)_{k, j} = \sum\limits_{k = 1}^n \delta_{i, a(k)} \delta_{k, b(j)}$.  This expression, $\delta_{i, a(k)} \delta_{k, b(j)}$, is 1 only when $i = a(k)$ and $k = b(j)$ (since one of the factors has to be 1), or else it's 0.  Thus, we have that $i = a(b(j))$, or $i = (a \circ b)(j)$.  Thus, $\sum\limits_{k = 1}^n \delta_{i, a(k)} \delta_{k, b(j)} = \delta_{i, (ab)(j)} = g(ab)_{i, j}$, meaning $g(a)g(b) = g(ab)$, since matrices are equal iff their elements are equal, so $g$ is a homomorphism.
+        
+        Now we just need to show $g$ is injective, which we can do by showing $\ker(g) = \{e\} = \{id\}$: $g(a) = I_n \implies g(a)_{ij} = \delta_{ij} \implies (i, a(j)) = (i, j) \implies a(j) = j \implies a = id = e$.  Thus, $g$ is an injective homomorphism, and by composition of injective homomorphisms, there's an injective homomorphism $h = g \circ f: G \to \GL_n(\mathbb{C})$, so every finite group $G$ is isomorphic to a subgroup of $\GL_n(\mathbb{C})$.
+    
+    \section{Problem 8}
+    Prove that every nontrivial finite group has a composition series.
+        
+        \subsection{Solution}
+        NTS $G:$ finite group, $G \neq \{e\} \implies$ $\exists$ a composition series of $G$.
+        
+        We can prove this by induction.  For the base case, if $G$ is simple, then its composition series is $1 \unlhd G$.  Otherwise, by the induction hypothesis, every normal subgroup $N_r \unlhd G$ has a composition series $1 = N_1 \unlhd ... \unlhd N_r$.  $G$ is not simple (or else the base case would apply), so $G$ has at least one nontrivial, non-self normal subgroup.  Take the maximal such normal subgroup and call it $N_r$.  Then $1 = N_1 \unlhd ... \unlhd N_r \unlhd G$ is a composition series of $G$.  Since we are choosing the maximal such normal subgroup at each step, the composition factors can't have any other nontrivial, non-self normal subgroups (they're in the composition series), so the composition factors are all simple by the 4th Isomorphism Theorem, since there's a bijection between normal subgroups of $N_{r + 1}/N_r$ and normal subgroups of $N_{r + 1}$ containing $N_r$, and $N_r$ is the maximal normal subgroup of $N_{r + 1}$ that isn't $N_{r + 1}$ itself.  Thus, by induction, every finite group has a composition series.
+    
+    \pagebreak
+    
+    \section{Problem 9}
+    Prove the following special case of the Jordan-Hölder theorem: if $G$ has a composition series $1 = N_0 \unlhd N_1 \unlhd ... \unlhd N_r = G$ and another one of the form $1 = M_0 \unlhd M_1 \unlhd M_2 = G$, then $r = 2$.  Moreover, the (unordered) list of composition factors is the same in both cases.  \textit{Hint: use the second isomorphism theorem.}
+        
+        \subsection{Solution}
+        I'm just going to prove the Jordan-Hölder Theorem in general by induction on the size of the group, $|G|$.  For the base case, when $|G| = 1$, the proof is trivial.  $\{e\}$ has the composition series $1 = G$ and this is obviously the only one.  Now, assume as the inductive hypothesis the Jordan-Hölder Theorem for all groups of size $< |G|$, i.e.\ if $|H| < |G|$, then $H$ has a composition series and its composition factors are unique up to permutation (i.e.\ the unordered list of composition factors is unique).
+        
+        Let $1 = M_0 \unlhd ... \unlhd M_m = G$ and $1 = N_0 \unlhd ... \unlhd N_n = G$ be two composition series for $G$.  Let $M = M_{m - 1}$ and $N = N_{n - 1}$, meaning $|M| < |G|$ and $|N| < |G|$, so the theorem holds for $M$ and $N$.  If $M = N$, then the theorem is trivially true, so assume $M \neq N$.  
+        
+        Let $K = M \cap N$.  We also have that $|K| < |G|$, so the theorem holds for $K$, too, so let $1 = K_0 \unlhd ... \unlhd K_k = K$ be a composition series for $K$.  By the 2nd Isomorphism Theorem, we have that $M/(M \cap N) \cong G/N$.  Since $K = M \cap N$, we then have $M/K \cong G/N$, so we know that $K$ is a normal subgroup of $M$ and it is the maximal such normal subgroup.  Thus, we can include $K$ in a composition series for $M$: $1 = K_0 \unlhd ... \unlhd K_k = K \unlhd M$.  
+        By the inductive hypothesis, the composition factors in these two composition series for $M$ must be the same up to permutation, so $(M_1/M_0, ..., M/M_{m - 2})$ and $(K_1/K_0, ..., K/K_{k - 1}, M/K)$ are the same up to permutation.  Since their lengths (which is unaffected by the permutation) are the same, we have that $m = k + 1$.
+        
+        Now we can do the same for $N$, since $M$ and $N$ are interchangeable.  Doing this, we get $(N_1/N_0, ..., N/N_{n - 2})$ and $(K_1/K_0, ..., K/K_{k - 1}, N/K)$ are the same up to permutation.  Again, we have $n = k + 1$.
+        
+        This means $m = n$, so the two composition series for $G$, $M$ and $N$ plus the last $G$ have equal lengths.  We also know now that $(M_1/M_0, ..., M/M_{m - 2})$ and $(N_1/N_0, ..., N/N_{n - 2})$ are the same up to permutation by transitivity.  
+        
+        Now we can add the last composition factor to all of them to get the composition factors for $G$: $(M_1/M_0, ..., M/M_{m - 2}, G/M)$ and $(K_1/K_0, ..., K/K_{k - 1}, M/K, G/M)$ are the same, and $(N_1/N_0, ..., N/N_{n - 2}, G/N)$ and $(K_1/K_0, ..., K/K_{k - 1}, N/K, G/N)$ are the same.  The two $K$ composition factor lists are the same except for their last composition factors, $G/M$ and $G/N$.  However, the last two factors in these lists, $(M/K, G/M)$ and $(N/K, G/N)$, are just permutations of each other: $(M/K, G/M) = (G/N, N/K)$, because by the 2nd Isomorphism Theorem, $M/K \cong G/N$ and $N/K \cong G/M$.  Thus, the two $K$ composition factor lists are the same up to permutations, so by transitivity, the $M$ and $N$ composition factor lists of $G$ are also the same up to permutations, and thus we have proved the Jordan-Hölder Theorem for all groups $G$.
+        
+    
+\end{document}
