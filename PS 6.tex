@@ -1,0 +1,310 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{ulem}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{fancyvrb}
+\usepackage{cleveref}
+\usepackage{centernot}
+
+\title{
+Math GU4041, Fall 2019 \\
+Modern Algebra I, Prof.\ Kyler Siegel \\
+Problem Set 6
+}
+\author{Khyber Sen}
+\date{11/1/2019}
+
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\orb}{orb}
+\DeclareMathOperator{\stab}{stab}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\cycletype}{cycle\_type}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+    
+    \maketitle
+    
+    \section{Problem 1}
+        
+        \subsection{(1)}
+        Give two permutations $\sigma, \sigma' \in A_n$ for some $n \geq 1$ such that $\sigma$ and $\sigma'$ have the same cycle type, but $\sigma$ and $\sigma'$ are \textit{not} conjugate in $A_n$.
+            
+            \subsection{Solution}
+            Consider $A_3 = \{(), (123), (132)\}$.  $(123), (132) \in A_3$ have the same cycle type, $(3)$, but they are not conjugate.  $Z(A_3) = A_3$ since $A_3 \cong \mathbb{Z}/3\mathbb{Z}$ (there's only one group of order 3 up to isomorphisms), which is abelian, so all the conjugacy classes of $A_3$ are singleton sets, meaning $(123)$ and $(132)$ must be in different conjugacy classes and thus not conjugate to each other.
+            
+            Also, part 2 below trivially proves $A_3$ must have two 3-cycles in different conjugacy classes since 3 is odd.
+        
+        \subsection{(2)}
+        Prove that if $n$ is odd, the set of $n$-cycles in $A_n$ consists of two conjugacy classes of equal size.
+            
+            \subsection{Solution}
+            Let $x$ be some $n$-cycle.  Since $x$ is an $n$-cycle and $n$ is odd, $x$ is even, meaning $x \in A_n$.  Furthermore, all the $n$-cycles in $S_n$ are a conjugacy class in $S_n$, so every $n$-cycle can be expressed as $gxg^{-1}$ for some $g \in S_n$.  If $g$ is even, then $g \in A_n$, too, so $gxg^{-1}$ is also in an $n$-cycle conjugacy class in $A_n$.  This isn't the case if $g$ is odd, because then $g \notin A_n$.  But then we can express $g$ as $g = ab$ where $b$ is odd and $a$ is even.  $bxb^{-1}$ is even since we are multiplying the odd $b$, the even $x$, and the odd $b^{-1}$.  Thus, $bxb^{-1} \in A_n$.  Furthermore, $a \in A_n$ since $a$ is even, so if we conjugate $bxb^{-1} \in A_n$ by $a \in A_n$, we get another conjugacy class in $A_n$.  Thus, we have two conjugacy classes, $A = \Cl(x)$, the even class, and $B = \Cl(bxb^{-1})$, the odd class.  Now we will prove that $A \cup B = \Cl_{S_n}(x)$, i.e.\ all the $n$-cycles, $A \cap B = \{\}$, and $|A| = |B|$.
+            
+            $A \cup B = \Cl_{S_n}(x)$ is obviously true, since we considered both odd and even $g \in S_n$, so we covered all possible $n$-cycles.
+            
+            To prove they are disjoint, we'll assume they are not.  Thus, some arbitrary element $axa^{-1} \in A$ must be conjugate to the element $bxb^{-1} \in B$ in $A_n$, where $a \in A_n$ is even and $b$ is odd.  $bxb^{-1}$ here is some specific element in $B$, but $axa^{-1}$ is an arbitrary element in $A$ that may depend on $bxb^{-1}$.  Since they are conjugate in $A_n$, $\exists$ an even $g \in A_n$ s.t.\ $axa^{-1} = g(bxb^{-1})g^{-1}$.  Therefore, $a^{-1}axa^{-1}a = x = a^{-1}gbxb^{-1}g^{-1}a = (a^{-1}gb)x(a^{-1}gb)^{-1}$.  $a^{-1}gb$ is odd since $a^{-1}$ is even, $g$ is even, and $b$ is odd.  Thus, conjugating by this odd $a^{-1}gb$ must result in an element in $B$, the odd class.  Thus, $(a^{-1}gb)x(a^{-1}gb)^{-1} \in B$.  But $(a^{-1}gb)x(a^{-1}gb)^{-1} = x$, so $x \in B$, but $x \in A = \Cl(x)$, which is a contradiction.  Therefore, $A$ and $B$ are disjoint.
+            
+            To show $|A| = |B|$, we'll examine the orbit and stabilizer under the conjugation action. \\ $b\stab_{A_n}(x)b^{-1} = \stab_{A_n}(bxb^{-1})$.  This is because
+            \begin{align}
+                s \in \stab(x) &\implies sx = x \\
+                    &\implies bsb^{-1} \in b\stab(x)b^{-1} \\
+                    & bsb^{-1} bxb^{-1} = bsxb^{-1} = bxb^{-1} \\
+                    &\implies bsb^{-1} \in \stab(bxb^{-1}) \\
+                &\therefore{} stab(x) \subseteq \stab(bxb^{-1}) \\
+                bsb^{-1} \in \stab(bxb^{-1}) &\implies bsb^{-1} bxb^{-1} = bxb^{-1} \\
+                    &\implies bsxb^{-1} = bxb^{-1} \\
+                    &\implies sx = x \\
+                    &\implies s \in \stab(x) \\
+                &\therefore{} \stab(bxb^{-1}) \subseteq stab(x) \\
+                &\therefore{} stab(x) = \stab(bxb^{-1})
+            \end{align}
+            Since conjugating doesn't change the order of a set, we have that
+            \begin{align}
+                |A| &= |\Cl(x)| \\
+                    &= |\orb(x)| \\
+                    &= \frac{|A_n|}{|\stab(x)|} \\
+                    &= \frac{|A_n|}{|b\stab(x)b^{-1}|} \\
+                    &= \frac{|A_n|}{|\stab(bxb^{-1})|} \\
+                    &= |\orb(bxb^{-1})| \\
+                    &= |\Cl(bxb^{-1})| \\
+                    &= |B|
+            \end{align}
+    
+    \section{Problem 2}
+    Prove that every group of order $p^2$ where $p$ is a prime is abelian.  \textit{Hint: What happens when you quotient by the center?}
+        
+        \subsection{Solution}
+        Let $G$ be a group of order $p^2$.  We need show $G$ is abelian when $p$ is prime.  Let's examine the center, $Z(G)$, and the group modulo the center, $G/Z(G)$.  As a subgroup, the $|Z(G)|$ must be either 1, $p$, or $p^2$ by Lagrange's Theorem.  Let's examine all three cases:
+        
+        If $|Z(G)| = p^2$, then $Z(G) = G$, so $G$ must be abelian. 
+        
+        If $|Z(G)| = p$, then $|G/Z(G)| = \frac{|G|}{|Z(G)|} = \frac{p^2}{p} = p$.  Since every group of prime order is cyclic, $G/Z(G)$ must then be cyclic.  Now we have to show that this implies $G$ is abelian.  Since $G/Z(G)$ is cyclic, it has some generator.  Call this generator $gZ(G)$.  Thus, $\forall$ $xZ(G) \in G/Z(G)$, $xZ(G) = (gZ(G))^m$ for some $m \in \mathbb{Z}$.  Therefore, $x = g^mz$ for some $z \in Z(G)$.  Now, do the same for another $y \in G$: $y = g^nw$ for some $w \in Z(G)$.  To show $G$ is abelian, we just have to show $xy = yx$.  Note that $z$ and $w$ are in $Z(G)$, so they commute with every element in $G$, including $g^m$, $g^n$, and themselves.
+        \begin{align}
+            xy &= g^m z g^n w \\
+                &= g^m g^n z w \\
+                &= g^{m + n} z w \\
+                &= g^{n + m} w z \\
+                &= g^n g^m w z \\
+                &= g^n w g^m z \\
+                &= yx
+        \end{align}
+        Thus, $G$ is abelian when $|Z(G)| = p$.
+        
+        If $|Z(G)| = 1$, then by the class equation, we have $|G| = |Z(G)| + \sum\limits_{i = 1}^r \frac{|G|}{|\stab(g_i)|} \implies p^2 - 1 = \sum\limits_{i = 1}^r \frac{p^2}{|\stab(g_i)|}$ under the conjugation action.  Since $|\stab(g_i)|$ is a whole number and it divides $|G|$, $\frac{|G|}{|\stab(g_i)|}$ must divide $|G| = p^2$ as well.  But the sum of such divisors of $p^2$ can't add up to $p^2 - 1$, so thus this is a contradiction, meaning $|Z(G)| \neq 1$.
+        
+        Thus, the only valid cases are $|Z(G)| = p^2$ and $p$, which both result in $G$ being abelian as proved above.
+    
+    \section{Problem 3}
+    Determine the decomposition of $D_8$ into conjugacy classes.  You should give a representation of each conjugacy class and state how many elements are in that conjugacy class.  Check that the class equation holds.
+        
+        \subsection{Solution}
+        $Z(D_8) = \{e, r^2\}$.  Since the center represents the singleton conjugacy classes, we have two singleton conjugacy classes: $\{e\}$ and $\{r^2\}$.  Then we can just try the other elements in $D_8$, finding their orbits under the conjugation action, i.e.\ their conjugacy class, and continuing until all the elements of $D_8$ are accounted for (I included the ones in the center, too).
+        \begin{align}
+            &\Cl(e)   = \orb(e)   = \{e\} \\
+            &\Cl(r^2) = \orb(r^2) = \{r^2\} \\
+            &\Cl(r)   = \orb(r)   = \{r, r^3\} \\
+            &\Cl(s)   = \orb(s)   = \{s, sr^2\} \\
+            &\Cl(sr)  = \orb(sr)  = \{sr, sr^3\} \\
+        \end{align}
+        Thus, the class equation becomes
+        \begin{align}
+            |D_8| &= |Z(D_8)| + |orb(r)| + |orb(s)| + |orb(sr)| \\
+                &= 2 + 2 + 2 + 2 \\
+                &= 8 \\
+                &= |D_8|
+        \end{align}
+        Thus, the class equation holds.
+    
+    \pagebreak
+    
+    \section{Problem 4}
+    Determine the decomposition of $D_8$ into conjugacy classes.  You should give a representative of each conjugacy class and state how many elements are in that conjugacy class.  Check that the class equation holds.
+        
+        \subsection{Solution}
+        In problem set \#5, in problem \#3, we proved that elements of $S_n$ are conjugate iff they have the same cycle types.  Thus, the conjugacy classes of $S_n$ are just the elements with the same cycles types.
+        Thus, the representative elements of the conjugacy classes are:
+        \begin{align}
+            &\cycletype((1, 1, 1, 1, 1)): \Cl(())        = \orb(()) = Z(S_5) = \{e\} \\
+            &\cycletype((2, 1, 1, 1))   : \Cl((12))      = \orb((12)) \\
+            &\cycletype((2, 2, 1))      : \Cl((12)(34))  = \orb((12)(34)) \\
+            &\cycletype((3, 1, 1))      : \Cl((123))     = \orb((123)) \\
+            &\cycletype((3, 2))         : \Cl((123)(45)) = \orb((123)(45)) \\
+            &\cycletype((4, 1))         : \Cl((1234))    = \orb((1234)) \\
+            &\cycletype((5))            : \Cl((12345))   = \orb((12345))
+        \end{align}
+        And the sizes are:
+        \begin{align}
+            \cycletype((1, 1, 1, 1, 1)): &= 1  \\
+            \cycletype((2, 1, 1, 1))   : \binom{5}{2} &= 10 \\
+            \cycletype((2, 2, 1))      : \frac{5!}{(2^2)(2!)(1)} &= 15 \\
+            \cycletype((3, 1, 1))      : 2 \cdot \binom{5}{3} &= 20 \\
+            \cycletype((3, 2))         : \frac{5!}{(3)(2)} &= 20 \\
+            \cycletype((4, 1))         : \frac{5!}{(4)(1)} &= 30 \\
+            \cycletype((5))            : \frac{5!}{5} &= 24
+        \end{align}
+        Thus, by the class equation, we have
+        \begin{align}
+            |S_5| &= 1 + 10 + 15 + 20 + 20 + 30 + 24 = 120
+        \end{align}
+    
+    \pagebreak
+    
+    \section{Problem 5}
+    Let $G \times X \to X$ be an action of a finite group $G$ on a set $X$, and let $r$ denote the number of orbits of this action.  For each $g \in G$, let $X_g := \{x \in X \mid gx = x\}$ denote the set of elements in $X$ fixed by $g$.
+        
+        \subsection{(1)}
+        Prove that we have
+        \begin{align}
+            \sum\limits_{g \in G} |X_g| &= \sum\limits_{x \in X} |\stab(x)|
+        \end{align}
+            
+            \subsubsection{Solution}
+            \begin{align}
+                \sum\limits_{g \in G} |X_g| 
+                    &= \sum\limits_{g \in G} |\{x \in X \mid gx = x\}| \\
+                    &= \sum\limits_{g \in G} \sum\limits_{x \in X} \begin{cases}
+                        gx = x \implies 1 \\
+                        gx \neq x \implies 0
+                    \end{cases} \\
+                    &= \sum\limits_{x \in X} \sum\limits_{g \in G} \begin{cases}
+                        gx = x \implies 1 \\
+                        gx \neq x \implies 0
+                    \end{cases} \\
+                    &= \sum\limits_{x \in X} |\{g \in G \mid gx = x\}| \\
+                    &= \sum\limits_{x \in X} |\stab(x)|
+            \end{align}
+        
+        \subsection{(2)}
+        Prove that we have
+        \begin{align}
+            \sum\limits_{x \in X} \frac{1}{|\orb(x)|} &= r
+        \end{align}
+            
+            \subsubsection{Solution}
+            \begin{align}
+                \sum\limits_{x \in X} \frac{1}{|\orb(x)|}
+                    &= \sum\limits_{\orb \in X} \sum\limits_{x \in \orb} \frac{1}{|\orb(x)|} \text{ (b/c every $x$ is in some orbit since orbits are partition $X$)} \\
+                    &= \sum\limits_{\orb \in X} \sum\limits_{x \in \orb} \frac{1}{|\orb|} \\
+                    &= \sum\limits_{\orb \in X} \frac{|\orb|}{|\orb|} \\
+                    &= \sum\limits_{\orb \in X} 1 \\
+                    &= r
+            \end{align}
+        
+        \pagebreak
+        
+        \subsection{(3)}
+        Prove that we have
+        \begin{align}
+            r &= \frac{1}{|G|} \sum\limits_{g \in G} |X_g|
+        \end{align}
+            
+            \subsubsection{Solution}
+            \begin{align}
+                r &= \sum\limits_{x \in X} \frac{1}{|\orb(x)|} \\
+                    &= \sum\limits_{x \in X} \frac{|\stab(x)|}{|G|} \\
+                    &= \frac{1}{|G|} \sum\limits_{x \in X} |\stab(x)| \\
+                    &= \frac{1}{|G|} \sum\limits_{g \in G} |X_g|
+            \end{align}
+        
+        This is known as Burnside's Lemma.
+    
+    \pagebreak
+    
+    \section{Problem 6}
+    Suppose we are given an equilateral triangle $T$.  We wish to count the number $N$ of distinguishable ways of coloring each of the three sides of $T$ with one of four colors (say blue, red, green, and yellow), where:
+    \begin{itemize}
+        \item We are allowed to use the same color more than once (e.g.\ we can paint two sides with yellow and the third side with blue).
+        \item Two such colorings are considered indistinguishable if we can transform one to another by a rotation in three space (i.e.\ an element of the dihedral group $D_6$). For example, coloring the three sides by red, blue, and green respectively is the same thing as coloring them by blue, red, and green respectively, since they differ by flipping the triangle over.
+    \end{itemize}
+    If we remember the ordering of the three sides, there are $4^3 = 64$ different possible colorings.  Let $X$ denote the corresponding set of colorings (i.e.\ $|X| = 64$), and consider the natural action of $S_3$ on $X$.  Convince yourself that $N$ is precisely the number of orbits of this action.
+        
+        \subsection{(1)}
+        For each $\sigma \in S_3$, compute $|X_\sigma|$ as defined in the previous problem.
+            
+            \subsubsection{Solution}
+            $|X_\sigma| = |\{x \in X \mid \sigma x = x\}| = $ the number of colorings that are indistinguishable by $\sigma$.  Thus,
+            \begin{align}
+                |X_{()}| &= |X_e| = |X| = A \\
+                |X_{(12)}| &= B \\
+                |X_{(13)}| &= |X_{(12)}| = B \\
+                |X_{(23)}| &= |X_{(12)}| = B \\
+                |X_{(123)}| &= C \\
+                |X_{(132)}| &= |X_{(123)}| = C
+            \end{align}
+            where $A = |X| = 4^3 = 64$ (any three colors), $B = 4^2 = 16$ (two colors total for the sides), and $C = 4^1 = 4$ (all sides are the same color).
+        
+        \subsection{(2)}
+        Use Burnside's Lemma to show that $N = 20$.
+            
+            \subsubsection{Solution}
+            \begin{align}
+                N &= \frac{1}{|S_3|} \sum\limits_{\sigma \in S_3} |X_\sigma| \\
+                    &= \frac{1}{|S_3|} \left(|X_{()}| + |X_{(12)}| + |X_{(13)}| + |X_{(23)}| + |X_{(123)}| + |X_{(132)}|\right) \\
+                    &= \frac{1}{|S_3|} \left(|X| + 3|X_{(12)}| + 2|X_{(123)}|\right) \\
+                    &= \frac{1}{6} \left(4^3 + 3 \cdot 4^2 + 2 \cdot 4^1\right) \\
+                    &= \frac{1}{6} \left(64 + 48 + 8\right) \\
+                    &= \frac{120}{6} \\
+                    &= 20
+            \end{align}
+    
+    \pagebreak
+    
+    \section{Problem 7}
+    Let $G$ be a finite group with $|G|$ odd, and let $g \in G$ be an element that is not the identity element.  Prove that $g$ and $g^{-1}$ are not conjugate in $G$.  \textit{Hint: Suppose by contradiction that $g$ and $g^{-1}$ are conjugate.  Consider the conjugacy class of $g$ in $G$.  Show that whenever it contains an element it also contains its inverse.}
+        
+        \subsection{Solution}
+        To prove this by contradiction, assume $g$ and $g^{-1}$ are conjugate.  Thus, $\exists$ $x \in G$ that conjugates $g$ and $g^{-1}$, i.e.\ $xg^{-1}x^{-1} = g$ or $gx = xg^{-1}$.  Now we can show by induction that
+        \begin{align}
+            (gx)^k = \begin{cases}
+                k: \text{even} \implies x^k \\
+                k: \text{odd} \implies gx^k
+            \end{cases}
+        \end{align}
+        For the base case, we have
+        \begin{align}
+            (gx)^0 &= e = x^0 \\
+            (gx)^1 &= gx^1
+        \end{align}
+        Assuming the inductive hypothesis, we then have
+        \begin{align}
+            (gx)^{k + 2} &= (gx)^k (gx)^2 \\
+                &= (gx)^k (xg^{-1})(gx) \\
+                &= (gx)^k x^2 \\
+                &= \left(\begin{cases}
+                    k: \text{even} \implies x^k \\
+                    k: \text{odd} \implies gx^k
+                \end{cases}\right) x^2 \\
+                &= \begin{cases}
+                    k: \text{even} \implies x^{k + 2} \\
+                    k: \text{odd} \implies gx^{k + 2}
+                \end{cases}
+        \end{align}
+        By Lagrange's Theorem, $|x|$ divides $|G|$, and since $|G|$ is odd, $|x|$ must also be odd.
+        Now we can use this to find the inverse of $x$:
+        \begin{align}
+            (gx)^{|x| - 1}x &= x^{|x| - 1} x \text{ (b/c $|x| - 1$ is even)} \\
+                &= x^{|x|} \\
+                &= e \\
+            \therefore x^{-1} &= (gx)^{|x| - 1}
+        \end{align}
+        Now, consider
+        \begin{align}
+            g^{-1} &= (x^{-1}x)g^{-1} \\
+                &= x^{-1}(xg^{-1}) \\
+                &= x^{-1} (gx) \\
+                &= (gx)^{|x| - 1}(gx) \\
+                &= (gx)^{|x|} \\
+                &= gx^{|x|} \\
+                &= g \\
+            \therefore g^2 &= gg^{-1} = e \\
+            \therefore |g| &= 2
+        \end{align}
+        However, $|g|$ must be odd since $|G|$ is odd and $|g|$ must divide $|G|$ by Lagrange's Theorem, which is a contradiction, so therefore $g$ and $g^{-1}$ must not be conjugate.
+    
+\end{document}
